@@ -1,6 +1,6 @@
 # yml para docker compose
 # criado em: 6/11/2023
-# última atualização em: 6/11/2023
+# última atualização em: 10/11/2023
 
 services:
 
@@ -23,7 +23,7 @@ services:
       - petsplace
 
   servidor:
-    image: node/petsplace:0.0.1
+    image: node/back:1.0.0
     container_name: servidor
     networks:
       - petsplace
@@ -31,7 +31,9 @@ services:
       - "8080:8080/tcp"
     depends_on:
       - mysql
-    build: ./
+    build:
+      context: ./
+      dockerfile: Dockerfile
 
 networks:
   petsplace:

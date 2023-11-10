@@ -1,4 +1,4 @@
-# PROIECTVS INTEGRATORIS - PARS I
+# PETS PLACE FRONT-END
 
 Servidor de recursos à aplicação PETS PLACE
 
@@ -16,12 +16,15 @@ Servidor de recursos à aplicação PETS PLACE
 ## INSTALAÇÃO
 
 ```bash
+
 $ npm install
+
 ```
 
 ## EXECUÇÃO DO PROJETO
 
 ```bash
+
 # development
 $ npm run start
 
@@ -30,11 +33,13 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
 ```
 
 ## TESTES
 
 ```bash
+
 # unit tests
 $ npm run test
 
@@ -43,20 +48,31 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+
 ```
 
 ## DOCKER
 
-composição composta por: mysql, phpmyadmin e node.
+Composição de três serviços docker: mysql, phpmyadmin e node/alpine.
 Ao utilizar o phpmyadmin certifique-se de obter o
 ip do container mysql em execução em tua máquina.
 
 ```bash
-# iniciar todos os containeres [não testado!]
+
+# Construir imagem do servidor
+$ docker compose build
+
+# Iniciar todos os containeres/serviços
 $ docker compose up
 
-# construir container back [testado]
-$ docker build -t 'node/petsplace:1.0' .
+# Iniciar um específico:
+$ docker compose up servidor
+
+# Para mais detalhes leia a
+# pequena documentação do
+# docker compose ao executar:
+$ docker compose --help
+
 ```
 
 ## LINCENÇA
