@@ -2,13 +2,16 @@
 # criado em: 6/11/2023
 # última atualização em: 10/11/2023
 
+# Cria a subrede docker petsplace
+# se ela não existir.
+
 services:
 
   mysql:
     image: mysql:latest
-    container_name: postgresdb
+    container_name: mysql
     volumes:
-      - dados:/var/lib/postgresql/data
+      - dados:/var/lib/mysql
     networks:
       - petsplace
     expose:
@@ -38,7 +41,9 @@ services:
 networks:
   petsplace:
     name: petsplace
+    driver: bridge
 
 volumes:
   dados:
     name: dados
+
