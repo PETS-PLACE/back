@@ -10,12 +10,30 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const clients_module_1 = require("./clients/clients.module");
+const typeorm_1 = require("@nestjs/typeorm");
+const client_entity_1 = require("./clients/entities/client.entity");
+require('dotenv').config();
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
+        imports: [
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'mysql',
+                host: 'localhost',
+                port: 3306,
+                username: process.env.MYSQL_DB_USER,
+                password: process.env.MYSQL_DB_PASSWORD,
+                database: 'petsPlace',
+                entities: [
+                    client_entity_1.Client
+                ],
+                synchronize: true,
+            }),
+            clients_module_1.ClientsModule
+        ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })
