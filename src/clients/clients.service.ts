@@ -5,16 +5,23 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Client } from './entities/client.entity';
 import { Repository } from 'typeorm';
 
+/** Provedor/Serviço para controlador clients.
+ *  @constructor
+ *  @param {Repository<Client>} usersRepository - Manipulador de dados conforme Entidade.
+* */
 @Injectable()
 export class ClientsService {
-  //Declarando serviço do repositório da entidade Client
+
   constructor(
     @InjectRepository(Client)
     private usersRepository: Repository<Client>
   ){}
 
-  //O CreateClientDto é o objeto que contem os dados transferidos da requisição
-  async create(createClientDto: CreateClientDto) {
+  /** Cria cliente no banco de dados conforme a entidade CreateClient.
+   *  @param {CreateClientDto} createClientDto - Data Transfer Object para CreateClient.
+   *  @returns {Promise<DeepPartial<Client[]>>} - Entidades salvas.
+  * */
+  async create(createClientDto: CreateClientDto): Promise<any> {
     const createUser = this.usersRepository.create({
       nome: createClientDto.nome,
       cpf: createClientDto.cpf,
@@ -27,23 +34,37 @@ export class ClientsService {
       password: createClientDto.password
     })
 
-    return await this.usersRepository.save(createUser)
+    return await this.usersRepository.save(createUser);
   }
 
-  async findAll() {
-    return await this.usersRepository.find()
+  /** Retorna todos clientes conforme entidade CreateClient
+   *  @returns {Promise<Client[]>} Entidades client.
+  * */
+  async findAll(): Promise<Client[]> {
+    return await this.usersRepository.find();
   }
 
-  async findOne(id: number) {
-    return this.usersRepository.findBy({id})
+  /** Retorna um usário pelo id absoluto. CreateClient.
+   *  @param {number} id - id do cliente.
+  *   @returns {Promise<Client[]>} - Entidades client.
+  * */
+  async findOne(id: number): Promise<Client[]> {
+    return this.usersRepository.findBy({id});
   }
 
-  async update(id: number, updateClientDto: UpdateClientDto) {
-    return this.usersRepository.update(id, updateClientDto)
-
+  /** Atualiza um cliente pelo id absoluto. CreateClient.
+   *  @param {number} id - id do cliente.
+  *   @returns {Promise<UpdateResult>}
+  * */
+  async update(id: number, updateClientDto: UpdateClientDto): Promise<any> {
+    return this.usersRepository.update(id, updateClientDto);
   }
 
-  async remove(id: number) {
-    return this.usersRepository.delete(id)
+  /** Remove um cliente pelo id absoluto. CreateClient.
+   *  @param {number} id - id do cliente.
+  *   @returns {Promise<DeleteResult>}
+  * */
+  async remove(id: number): Promise<any> {
+    return this.usersRepository.delete(id);
   }
 }

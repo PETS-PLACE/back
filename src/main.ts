@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   //O CORS é um mecanismo que permite que os recursos sejam solicitados de outro domínio
-  app.enableCors()
+  app.enableCors();
 
   //Usando validação
   app.useGlobalPipes(new ValidationPipe({
@@ -14,8 +14,8 @@ async function bootstrap() {
     whitelist: true,
     //Semelhante ao whitelist porem ele lança uma excessão se houver algum campo na requisição que não está definido no Dto 
     forbidNonWhitelisted: true
+  }));
 
-  }))
   await app.listen(8080);
 }
 bootstrap();
