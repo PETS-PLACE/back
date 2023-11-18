@@ -18,8 +18,8 @@ export class ClientsController {
     private readonly checkIsRegistrationPipe: CheckIsRegistrationPipe,
   ) {}
 
-  /** Método que cria um novo registro de cliente.
-   *  @param {CreateClientDto} createClientDto - pipe validação de body.
+  /** Cria um novo registro de cliente.
+   *  @param {CreateClientDto} createClientDto - pipe validação de body CreateClient.
   * */
   @Post()
   async create(@Body() createClientDto: CreateClientDto) {
@@ -27,14 +27,16 @@ export class ClientsController {
     return this.clientsService.create(createClientDto);
   }
 
-  /** Método retorna todos os registros de usuário.
+  /** Retorna todos os registros de cliente.
   * */
   @Get()
   async findAll() {
     return this.clientsService.findAll();
   }
 
-  /** Método retorna registro específico por parâmetro de id.
+  /** Retorna um registro de cliente pelo id absoluto.
+   *  @param {Response} response - objeto express Response.
+   *  @param {string} id - id absoluto do banco de dados.
   * */
   @Get(':id')
   async findOne(@Res() response:Response, @Param('id') id: string) {
@@ -44,19 +46,20 @@ export class ClientsController {
     result.then(res => {
       if (res == null) {
         return response.status(404).json({
-          massagem: "Usuário não encotrado"
-        })
+          msg: "Usuário não encotrado"
+        });
       } else {
-        return response.status(200).json(res)
+        return response.status(200).json(res);
       }
-
     }).catch(err => {
-      throw new HttpException('Devido a um erro interno não foi possível encontra o usuário', HttpStatus.INTERNAL_SERVER_ERROR)
+      console.log(err);
+      throw new HttpException('Erro interno', HttpStatus.INTERNAL_SERVER_ERROR);
     });
     
   }
 
-  /** Método atualiza registro por parâmetro de id.
+  /** Atualiza registro por parâmetro de id.
+   *  @param {string} id - id absoluto do banco de dados.
   * */
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateClientDto: UpdateClientDto) {
@@ -64,8 +67,9 @@ export class ClientsController {
   }
 
   /** Método remove registro por parâmetro de id.
+   *  @param {string} id - id absoluto do banco de dados.
   * */
-  @HttpCode(204) //no content
+  @HttpCode(204) //NoContent
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return this.clientsService.remove(+id);

@@ -9,6 +9,8 @@ services:
       - petsplace
     expose:
       - "3306"
+    ports:
+      - "3306:3306/tcp"
     environment:
       MYSQL_ROOT_PASSWORD: alphonsus
       MYSQL_DATABASE: petsplacedata
