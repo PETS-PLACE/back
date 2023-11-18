@@ -4,6 +4,7 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { Request, Response } from 'express';
 import { CheckIsRegistrationPipe } from './pipes/check-is-registration.pipe';
+import { Logger } from '@nestjs/common';
 
 /** Controlador clients.
  *  @constructor
@@ -23,7 +24,8 @@ export class ClientsController {
   * */
   @Post()
   async create(@Body() createClientDto: CreateClientDto) {
-    await this.checkIsRegistrationPipe.transform(createClientDto);
+    await this.checkIsRegistrationPipe.transform(createClientDto)
+    .catch( (reason) => { Logger.log(reason) } );
     return this.clientsService.create(createClientDto);
   }
 
