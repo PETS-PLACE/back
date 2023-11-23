@@ -2,6 +2,8 @@ import { Module, NestModule } from '@nestjs/common';
 import { ClientsModule } from './clients/clients.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Client } from './clients/entities/client.entity';
+import { PetshopModule } from './petshop/petshop.module';
+import { Petshop } from './petshop/entities/petshop.entity';
 require('dotenv').config();
 
 @Module({
@@ -14,11 +16,13 @@ require('dotenv').config();
       password: process.env.MYSQL_DB_PASSWORD,
       database: process.env.MYSQL_DB_NAME,
       entities: [
-        Client
+        Client,
+        Petshop
       ],
       synchronize: true,
     }),
-    ClientsModule
+    ClientsModule,
+    PetshopModule
   ],
   controllers: [],
   providers: [],
