@@ -1,15 +1,18 @@
 import { Controller } from '@nestjs/common';
 import { Get, Post } from '@nestjs/common';
 import { Body } from '@nestjs/common';
+
 import { CreatePetshopDto } from '../dto/create-petshop.dto';
 import { ValidationPipe } from '@nestjs/common';
 import { PetshopService } from '../petshop.service/petshop.service';
+import { ChecarPetshopsPipe } from '../pipes/checar-petshops.pipe';
 
 @Controller('petshop')
 export class PetshopController {
 
   constructor(
-    private petshopService: PetshopService
+    private readonly petshopService: PetshopService,
+    private readonly petshopChecar: ChecarPetshopsPipe
   ){}
 
   /** Armazena dados do cliente e retorna
@@ -20,6 +23,7 @@ export class PetshopController {
   async registrarPetshop(
     @Body(new ValidationPipe()) createPetshopDto: CreatePetshopDto
   ): Promise<CreatePetshopDto> {
+    await this.petshopChecar.transform( createPetshopDto );
     return this.petshopService.salvarDadosPetshop( createPetshopDto );
   }
 
