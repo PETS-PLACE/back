@@ -38,11 +38,6 @@ export class CreatePetshopDto {
     @IsNotEmpty({message: 'A string estado informada está vazia'})
     estado: string;
 
-    @IsString({message: 'Uma string JSON de contatos deve ser informado'})
-    @IsNotEmpty({message: 'A string JSON de contatos informada está vazia'})
-    @Length(0,2048,{message: 'JSON de contatos Menor que zero ou maior que 2048'})
-    contatos: string;
-
     @IsString({message: 'É necessário informar uma senha'})
     @IsNotEmpty({message: 'A string Email informada está vazia'})
     @IsStrongPassword({minLength:14},{message:'É necessário informar uma senha de 14 a 32 caracteres'})

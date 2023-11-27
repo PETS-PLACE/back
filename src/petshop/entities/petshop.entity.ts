@@ -30,9 +30,6 @@ export class Petshop {
     @Column('varchar',{length: 255})
     estado: string;
 
-    @Column("varchar", {length: 2048})
-    contatos: string;
-
     @Column()
     password: string;
 

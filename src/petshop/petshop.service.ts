@@ -26,7 +26,6 @@ export class PetshopService {
       bairro:   createPetshopDto.bairro,
       cidade:   createPetshopDto.cidade,
       estado:   createPetshopDto.estado,
-      contatos: createPetshopDto.contatos,
       password: createPetshopDto.password,
     });
     return await this.petshopsRepositorio.save( createPetshop );
