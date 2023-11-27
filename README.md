@@ -75,6 +75,27 @@ $ docker compose --help
 
 ```
 
+## ROTAS
+Última atualização: 27/11/2023
+
+```
+
+/clients
+/clients, POST
+/clients, GET
+/clients/:id, GET
+/clients/:id, PATCH
+/clients/:id, DELETE
+
+/petshop
+/petshop, POST
+
+```
+
+IMPORTANTE: A diretório src/[NOMEDOMÓDULO]/dto/ no repositório
+do back contém campos exigidos para que uma requisição dê sucesso.
+Cada módulo representa funcionalidades de entidades no sistema.
+
 ## LINCENÇA
 
   Pets Place é [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
