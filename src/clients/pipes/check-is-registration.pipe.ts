@@ -1,8 +1,9 @@
-import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
+import { BadRequestException, Injectable, PipeTransform, Res } from '@nestjs/common';
 import { CreateClientDto } from '../dto/create-client.dto';
 import { Client } from '../entities/client.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { response, Response } from 'express';
 
 /** Pipe de validação customizado se name (username) já foi cadastrado.
  *  @constructor
@@ -19,6 +20,7 @@ export class CheckIsRegistrationPipe implements PipeTransform<CreateClientDto> {
   /** Consulta banco de dados verificando a pré-existência
    *  de email e cpf.
    *  @param {CreateClientDto} value - dto do cliente para create.
+   *  @param response - http
   * */
   async transform(value: CreateClientDto) {
     
@@ -35,14 +37,18 @@ export class CheckIsRegistrationPipe implements PipeTransform<CreateClientDto> {
     })
 
     if (findEmail.length > 0) {
-      throw new BadRequestException('Esse email de usuário já esta cadastrado')
+      throw new BadRequestException({status: 400, message: 'Esse email de usuário já esta cadastrado'})
     }
 
     if (findCpf.length > 0) {
-      throw new BadRequestException('Esse cpf já esta cadastrado')
+      throw new BadRequestException({status: 400, message: 'Esse cpf já esta cadastrado'})
+    }
+
+    else{
+
+      return value;
     }
     
-    return value;
 
   }
 }

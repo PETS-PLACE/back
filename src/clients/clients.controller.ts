@@ -1,10 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, BadRequestException, HttpException, Req, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res, } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { CheckIsRegistrationPipe } from './pipes/check-is-registration.pipe';
-import { Logger } from '@nestjs/common';
 
 /** Controlador clients.
  *  @constructor
@@ -23,17 +22,25 @@ export class ClientsController {
    *  @param {CreateClientDto} createClientDto - pipe validação de body CreateClient.
   * */
   @Post()
-  async create(@Body() createClientDto: CreateClientDto) {
+  async create(@Body() createClientDto: CreateClientDto, @Res() response: Response) {
+
     await this.checkIsRegistrationPipe.transform(createClientDto)
-    .catch( (reason) => { Logger.log(reason) } );
-    return this.clientsService.create(createClientDto);
+    .then(async (res) => {
+
+      const result = await this.clientsService.create(createClientDto);
+  
+      return response.status(result.status).json(result)
+    })
+    .catch( (reason) => { response.status(400).json(reason) } );
+    
   }
 
   /** Retorna todos os registros de cliente.
   * */
   @Get()
-  async findAll() {
-    return this.clientsService.findAll();
+  async findAll(@Res() response: Response) {
+    const result = await this.clientsService.findAll();
+    return response.status(result.status).json(result)
   }
 
   /** Retorna um registro de cliente pelo id absoluto.
@@ -43,20 +50,8 @@ export class ClientsController {
   @Get(':id')
   async findOne(@Res() response:Response, @Param('id') id: string) {
     
-    const result = this.clientsService.findOne(+id);
-
-    result.then(res => {
-      if (res == null) {
-        return response.status(404).json({
-          msg: "Usuário não encotrado"
-        });
-      } else {
-        return response.status(200).json(res);
-      }
-    }).catch(err => {
-      console.log(err);
-      throw new HttpException('Erro interno', HttpStatus.INTERNAL_SERVER_ERROR);
-    });
+    const result = await this.clientsService.findOne(+id);
+    return response.status(result.status).json(result)
     
   }
 
@@ -64,16 +59,18 @@ export class ClientsController {
    *  @param {string} id - id absoluto do banco de dados.
   * */
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateClientDto: UpdateClientDto) {
-    return this.clientsService.update(+id, updateClientDto);
+  async update(@Param('id') id: string, @Body() updateClientDto: UpdateClientDto, @Res() response: Response) {
+    const result = await this.clientsService.update(+id, updateClientDto);
+    return response.status(result.status).json(result)
   }
 
   /** Método remove registro por parâmetro de id.
    *  @param {string} id - id absoluto do banco de dados.
   * */
-  @HttpCode(204) //NoContent
+  //@HttpCode(204) //NoContent
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    return this.clientsService.remove(+id);
+  async remove(@Param('id') id: string, @Res() response: Response) {
+    const result = await this.clientsService.remove(+id);
+    return response.status(result.status).json(result)
   }
 }
