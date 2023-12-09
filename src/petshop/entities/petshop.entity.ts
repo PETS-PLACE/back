@@ -1,6 +1,11 @@
-import {  Column, CreateDateColumn, Entity, PrimaryGeneratedColumn,
-          Unique, UpdateDateColumn
+import {
+  Entity, Column,
+  CreateDateColumn, UpdateDateColumn,
+  PrimaryGeneratedColumn,
+  Unique,
+  OneToMany
 } from "typeorm";
+import { Contatos } from "src/contatos/entities/contatos.entity";;
 
 @Entity()
 @Unique(['cnpj'])
@@ -32,6 +37,9 @@ export class Petshop {
 
     @Column()
     password: string;
+
+    @OneToMany( () => Contatos, (contatos) => contatos.petshop )
+    contatos: Contatos[];
 
     @CreateDateColumn({name: 'created_at'})
     createAt: string;
