@@ -28,7 +28,7 @@ export class ChecarPetshopsPipe implements PipeTransform<CreatePetshopDto> {
     });
 
     if (pessoaJuridica.length > 0) {
-      throw new BadRequestException('Esse cnpj já existe');
+      throw new BadRequestException({status: 400, message: 'Este CNPJ já esta cadastrado'});
     }
     
     return petshop;

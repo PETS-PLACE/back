@@ -10,7 +10,7 @@ export class Petshop {
     id: number;
 
     @Column('varchar',{length: 255})
-    nomeComercial: string;
+    nome: string;
 
     @Column('varchar',{length: 14})
     cnpj: string;
@@ -29,6 +29,9 @@ export class Petshop {
 
     @Column('varchar',{length: 255})
     estado: string;
+
+    @Column("varchar", {length: 255})
+    email: string
 
     @Column()
     password: string;
