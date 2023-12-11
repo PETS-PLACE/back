@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Client } from './clients/entities/client.entity';
 import { PetshopModule } from './petshop/petshop.module';
 import { Petshop } from './petshop/entities/petshop.entity';
+import { Contatos } from './contatos/entities/contatos.entity';
+import { ContatosModule } from './contatos/contatos.module';
 require('dotenv').config();
 
 @Module({
@@ -17,15 +19,18 @@ require('dotenv').config();
       database: process.env.MYSQL_DB_NAME,
       entities: [
         Client,
-        Petshop
+        Petshop,
+        Contatos
       ],
       synchronize: true,
     }),
     ClientsModule,
-    PetshopModule
+    PetshopModule,
+    ContatosModule
   ],
   controllers: [],
   providers: [],
+  exports: []
 })
 export class AppModule implements NestModule {
 

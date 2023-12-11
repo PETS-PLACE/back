@@ -76,7 +76,7 @@ $ docker compose --help
 ```
 
 ## ROTAS
-Última atualização: 27/11/2023
+Última atualização: 9/12/2023
 
 ```
 
@@ -90,10 +90,12 @@ $ docker compose --help
 /petshop
 /petshop, POST
 
+/contatos, GET POST PUT DELETE
+
 ```
 
 IMPORTANTE: A diretório src/[NOMEDOMÓDULO]/dto/ no repositório
-do back contém campos exigidos para que uma requisição dê sucesso.
+do back contém campos exigidos para que uma requisição tenha sucesso.
 Cada módulo representa funcionalidades de entidades no sistema.
 
 ## LINCENÇA
