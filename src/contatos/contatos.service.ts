@@ -29,7 +29,7 @@ export class ContatosService {
   private async petshopExiste( nomeComercial: string ): Promise<Petshop> {
       const petshop =  await this.petshopRepo.findOne({
         where:{
-          nomeComercial: nomeComercial
+          nome: nomeComercial
         }
       });
 
