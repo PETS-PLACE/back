@@ -4,16 +4,16 @@ import { IsNotEmpty, IsString } from "class-validator";
 *   ambos os usuarios.*/
 export class CreateTokenDto {
 
-  @IsNotEmpty({message:'campo nome vazio'})
   @IsString({message:'campo nome nao string'})
+  @IsNotEmpty({message:'campo nome vazio'})
   nome: string;
 
-  @IsNotEmpty({message:'campo senha vazio'})
   @IsString({message:'campo senha nao string'})
+  @IsNotEmpty({message:'campo senha vazio'})
   senha: string;
 
-  @IsNotEmpty({message:'campo tipo de conta vazio'})
   @IsString({message:'campo tipo de conta nao string'})
+  @IsNotEmpty({message:'campo tipo de conta vazio'})
   tipo: 'client'|'petshop';
 }
 

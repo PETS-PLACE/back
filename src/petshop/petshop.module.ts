@@ -14,9 +14,7 @@ import { ChecarPetshopsPipe } from './pipes/checar-petshops.pipe';
     PetshopService,
     ChecarPetshopsPipe
   ],
-  exports: [
-    PetshopService
-  ]
+  exports: [ PetshopService ]
 })
 export class PetshopModule {
 }

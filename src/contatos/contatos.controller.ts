@@ -11,6 +11,14 @@ import { EditarContatoDto } from './dto/edit-contato.dto';
 import { FindContatosDto } from './dto/find-contatos.dto';
 import { DeleteContatoDto } from './dto/delete-contato.dto';
 
+//autenticação
+import { UseGuards } from '@nestjs/common';
+import { AutenticacaoGuard } from 'src/autenticacao/autenticacao.guard';
+
+//autorização
+import { Role } from 'src/autenticacao/enumeracoes/role.enum';
+import { Roles } from 'src/autenticacao/autenticacao.decorator';
+
 @Controller('contatos')
 export class ContatosController {
 
@@ -19,6 +27,8 @@ export class ContatosController {
   ){}
 
   @Post()
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
   async criarContato(
     @Body(new ValidationPipe()) createContatoDto: CreateContatoDto
   ): Promise<any> {
@@ -37,6 +47,8 @@ export class ContatosController {
   }
 
   @Put()
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
   async editarContato(
     @Body(new ValidationPipe()) editarContatoDto: EditarContatoDto 
   ): Promise<any> {
@@ -53,6 +65,8 @@ export class ContatosController {
   }
 
   @Get()
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
   async lerContatos(
     @Body(new ValidationPipe()) findContatosDto: FindContatosDto
   ): Promise<any> {
@@ -69,6 +83,8 @@ export class ContatosController {
   }
 
   @Delete()
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
   async deletarContato(
     @Body(new ValidationPipe()) deleteContatoDto: DeleteContatoDto
   ): Promise<any> {

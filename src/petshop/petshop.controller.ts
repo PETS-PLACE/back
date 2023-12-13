@@ -8,6 +8,14 @@ import { PetshopService } from './petshop.service';
 import { ChecarPetshopsPipe } from './pipes/checar-petshops.pipe';
 import { UpdatePetshopDto } from './dto/update-petshop.dto';
 
+//autenticação
+import { UseGuards } from '@nestjs/common';
+import { AutenticacaoGuard } from 'src/autenticacao/autenticacao.guard';
+
+//autorização
+import { Role } from 'src/autenticacao/enumeracoes/role.enum';
+import { Roles } from 'src/autenticacao/autenticacao.decorator';
+
 @Controller('petshop')
 export class PetshopController {
 
@@ -21,6 +29,8 @@ export class PetshopController {
    *  @param {CreatePetshopDto} createPetshopDto - dados para o pipe.
   * */
   @Post()
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
   async registrarPetshop(
     @Body(new ValidationPipe()) createPetshopDto: CreatePetshopDto,
     @Res() response: Response
@@ -35,24 +45,32 @@ export class PetshopController {
   }
 
   @Get()
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
   async findAll(@Res() response: Response){
     const result = await this.petshopService.findAll()
     return response.status(result.status).json(result)
   }
 
   @Get(':id')
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
   async findOne(@Res() response:Response, @Param('id') id: string){
     const result = await this.petshopService.findOne(+id)
     return response.status(result.status).json(result)
   }
 
   @Patch(":id")
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
   async update(@Res() response:Response, @Param('id') id: string, @Body() updatePetshopDto: UpdatePetshopDto){
     const result = await this.petshopService.update(+id, updatePetshopDto)
     return response.status(result.status).json(result)
   }
 
   @Delete(":id")
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
   async remove(@Res() response:Response, @Param('id') id: string){
     const result = await this.petshopService.remove(+id)
     return response.status(result.status).json(result)
