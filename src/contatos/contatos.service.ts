@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { InternalServerErrorException } from '@nestjs/common';
 
 //import { Contatos } from 'src/petshop/entities/contatos.entity';
 import { Contatos } from './entities/contatos.entity';
@@ -8,8 +9,6 @@ import { Petshop } from 'src/petshop/entities/petshop.entity';
 
 import { CreateContatoDto } from './dto/create-contato.dto';
 import { EditarContatoDto } from './dto/edit-contato.dto';
-import { FindContatosDto } from './dto/find-contatos.dto';
-import { DeleteContatoDto } from './dto/delete-contato.dto';
 
 /* campos que requerem id
  * exigem que o cliente tenha
@@ -26,14 +25,17 @@ export class ContatosService {
     @InjectRepository(Petshop) private petshopRepo: Repository<Petshop>
   ){}
 
-  private async petshopExiste( nomeComercial: string ): Promise<Petshop> {
+  private async petshopExiste( nome: string ): Promise<Petshop> {
       const petshop =  await this.petshopRepo.findOne({
         where:{
-          nome: nomeComercial
+          nome: nome
         }
       });
 
-      if ( petshop == null ) throw new Error('petshop requisitado não existe');
+      if ( petshop == null ) throw new InternalServerErrorException({
+        status: 500,
+        msg: 'petshopExiste() não conseguiu retornar petshop do banco de dados'
+      });
       else return petshop;
   }
 
@@ -41,7 +43,7 @@ export class ContatosService {
   async salvarContato( createContatoDto: CreateContatoDto ) {
     try {
 
-      const petshop = await this.petshopExiste( createContatoDto.nomeComercial );
+      const petshop = await this.petshopExiste( createContatoDto.nome );
 
       const contato = new Contatos();
       contato.info = createContatoDto.info;
@@ -49,49 +51,56 @@ export class ContatosService {
       return this.contatosRepo.save( contato );
     }
     catch( err ) {
-      throw new Error( err );
+      throw new InternalServerErrorException({
+        status: 500,
+        message: 'não foi possível salvar contato',
+        detalhes: err
+      });
     }
   }
 
-  async editarContato( editarContatoDto: EditarContatoDto ) {
+  async editarContato( editarContatoDto: EditarContatoDto, id: number ) {
     try {
-      return await this.contatosRepo.update({ id: editarContatoDto.id }
+      return await this.contatosRepo.update({ id: id }
         ,{info: editarContatoDto.info});
     }
     catch( err ) {
-      throw new Error( err );
+      throw new InternalServerErrorException({
+        status: 500,
+        message: 'não foi possível editar contato',
+        detalhes: err
+      });
     }
   }
 
-  async lerContatos( findContatosDto: FindContatosDto ) {
+  async lerContatos( nome: string ) {
     try {
-      const petshop = await this.petshopExiste( findContatosDto.nomeComercial );
+      const petshop = await this.petshopExiste( nome );
+
       return await this.petshopRepo.createQueryBuilder('petshop')
         .leftJoinAndSelect('petshop.contatos', 'contatos')
         .where('contatos.petshop = :idPetshop', {idPetshop:petshop.id})
         .getMany();
     }
     catch( err ) {
-      throw Error( err );
+      throw new InternalServerErrorException({
+        status: 500,
+        message: 'não foi possível obter todos contatos do petshop',
+        detalhes: err
+      });
     }
   }
 
-  async deletarContato( deleteContatoDto: DeleteContatoDto ) {
+  async deletarContato( id: number ) {
     try {
-
-      const petshop = await this.petshopExiste( deleteContatoDto.nomeComercial );
-
-      const alvo = await this.petshopRepo.createQueryBuilder('petshop')
-        .leftJoinAndSelect('petshop.contatos', 'contatos')
-        .where('contatos.petshop = :idPetshop', {idPetshop:petshop.id})
-        .getOne();
-
-      if ( alvo == null ) return [];
-
-      return await this.contatosRepo.delete( alvo.id );
+      return await this.contatosRepo.delete( id );
     }
     catch( err ) {
-      throw new Error( err );
+      throw new InternalServerErrorException({
+        status: 500,
+        message: 'não foi possível deletar contato',
+        detalhes: err
+      });
     }
   }
 

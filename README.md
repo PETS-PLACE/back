@@ -76,21 +76,36 @@ $ docker compose --help
 ```
 
 ## ROTAS
-Última atualização: 9/12/2023
+Última atualização: 14/12/2023
 
-```
+``` Informações únicas para cada usuário: nome, cpf, email
+    (!) alertas de segurança ou desempenho.
+    (A) autenticação necessária.
+
 
 /clients
-/clients, POST
-/clients, GET
-/clients/:id, GET
-/clients/:id, PATCH
-/clients/:id, DELETE
+    /clients, POST {nome,cpf,rua,numero,bairro,cidade,estado,email,password}
+    /clients, GET - retorna todos os clientes do sistema (!)(A)
+    /clients/:id, GET - retona cliente pelo seu id (A)
+    /clients/:id, PATCH - PartialType de POST (A)
+    /clients/:id, DELETE - deleta cliente pelo seu id (A)
 
 /petshop
-/petshop, POST
+    /petshop, POST {nome,cnpj,rua,numero,bairro,cidade,estado,email,password}
+    /petshop, GET - retorna todos os petshops do sistema (!)(A)
+    /petshop/:id, GET - retorna petshop pelo seu id (A)
+    /petshop/:id, PATCH - partialType de POST (A)
+    /petshop/:id, DELETE - deleta petshop pelo id (A)
 
-/contatos, GET POST PUT DELETE
+/contatos
+    /contatos/:nome, GET - lista de contatos do petshop com nome (!)(A)
+    /contatos, POST {contato.info, petshop.nome} - novo contato (A)
+    /contatos/:id, PUT {contato.info} - alterar contato (A)
+    /contatos/:id, DELETE - deleta contato pelo id (A)
+
+/autenticacao
+    POST {USUARIO.nome, USUARIO.senha, tipo} - obter autorização para acesso à rotas (!)
+        Authorization: bearer <base64_do_token>
 
 ```
 

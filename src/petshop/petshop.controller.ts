@@ -29,7 +29,6 @@ export class PetshopController {
    *  @param {CreatePetshopDto} createPetshopDto - dados para o pipe.
   * */
   @Post()
-  @UseGuards(AutenticacaoGuard)
   @Roles(Role.Petshop)
   async registrarPetshop(
     @Body(new ValidationPipe()) createPetshopDto: CreatePetshopDto,

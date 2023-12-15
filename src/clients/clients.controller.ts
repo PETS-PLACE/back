@@ -30,7 +30,6 @@ export class ClientsController {
    *  @param {CreateClientDto} createClientDto - pipe validação de body CreateClient.
   * */
   @Post()
-  @UseGuards(AutenticacaoGuard)
   @Roles(Role.Client)
   async create(@Body() createClientDto: CreateClientDto, @Res() response: Response) {
 
