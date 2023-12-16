@@ -113,6 +113,22 @@ IMPORTANTE: A diretório src/[NOMEDOMÓDULO]/dto/ no repositório
 do back contém campos exigidos para que uma requisição tenha sucesso.
 Cada módulo representa funcionalidades de entidades no sistema.
 
+## REQUISITAR
+
+Exemplo de uso do curl para teste de requisição:
+
+```
+
+$ curl -v \
+-X PATCH \
+-H 'Content-Type:application/json' \
+-H 'Authorization: bearer <Token>' \
+-d '{"rua":"Beco do matadouro"}' \
+http://127.0.0.1:8080/petshop/2
+
+
+```
+
 ## LINCENÇA
 
   Pets Place é [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).

@@ -14,6 +14,13 @@ type Retorno = {
   message?:string
 };
 
+type Token =
+{
+  sub:number;
+  nome:string;
+  tipo:string
+};
+
 @Injectable()
 export class AutenticacaoService {
 
@@ -29,7 +36,8 @@ export class AutenticacaoService {
   : Promise<Retorno> {
 
     let usuario: Client|Petshop;
-    let carga: {sub:number,nome:string}; //definir type dentro de autenticacao.
+    let carga: Token; //definir type dentro de autenticacao.
+    let tipo = undefined;
 
     try {
       if ( createTokenDto.tipo == 'client' ) {
@@ -38,6 +46,7 @@ export class AutenticacaoService {
               nome: createTokenDto.nome
             }
           });
+        tipo = 'client';
       }
       else if ( createTokenDto.tipo == 'petshop' ) {
         usuario = await this.petshopRepository.findOne({
@@ -45,11 +54,20 @@ export class AutenticacaoService {
               nome: createTokenDto.nome
             }
           });
+        tipo = 'petshop';
       }
+
+      if ( typeof tipo == undefined ) {
+        return {
+          status: 500,
+          message: 'O método responsavel criar o token não conseguiu determinar o tipo da conta'
+        }
+      };
 
       carga = {
         sub: usuario.id,
-        nome: usuario.nome
+        nome: usuario.nome,
+        tipo: tipo          //utilizado para ROLE BASED ACCESS CONTROL
       };
       
       if ( usuario.nome == createTokenDto.nome && usuario.password == createTokenDto.senha ) {

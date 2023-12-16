@@ -12,6 +12,7 @@ import { AutenticacaoGuard } from 'src/autenticacao/autenticacao.guard';
 //autorização
 import { Role } from 'src/autenticacao/enumeracoes/role.enum';
 import { Roles } from 'src/autenticacao/autenticacao.decorator';
+import { UsuarioTipoGuard } from 'src/autenticacao/autenticacao.RolesGuard';
 
 /** Controlador clients.
  *  @constructor
@@ -30,7 +31,6 @@ export class ClientsController {
    *  @param {CreateClientDto} createClientDto - pipe validação de body CreateClient.
   * */
   @Post()
-  @Roles(Role.Client)
   async create(@Body() createClientDto: CreateClientDto, @Res() response: Response) {
 
     await this.checkIsRegistrationPipe.transform(createClientDto)
@@ -49,6 +49,7 @@ export class ClientsController {
   @Get()
   @Roles(Role.Client)
   @UseGuards(AutenticacaoGuard)
+  @UseGuards(UsuarioTipoGuard)
   async findAll(@Res() response: Response) {
     const result = await this.clientsService.findAll();
     return response.status(result.status).json(result)
@@ -61,6 +62,7 @@ export class ClientsController {
   @Get(':id')
   @Roles(Role.Client)
   @UseGuards(AutenticacaoGuard)
+  @UseGuards(UsuarioTipoGuard)
   async findOne(@Res() response:Response, @Param('id') id: string) {
     
     const result = await this.clientsService.findOne(+id);
@@ -74,6 +76,7 @@ export class ClientsController {
   @Patch(':id')
   @Roles(Role.Client)
   @UseGuards(AutenticacaoGuard)
+  @UseGuards(UsuarioTipoGuard)
   async update(@Param('id') id: string, @Body() updateClientDto: UpdateClientDto, @Res() response: Response) {
     const result = await this.clientsService.update(+id, updateClientDto);
     return response.status(result.status).json(result)
@@ -86,6 +89,7 @@ export class ClientsController {
   @Delete(':id')
   @Roles(Role.Client)
   @UseGuards(AutenticacaoGuard)
+  @UseGuards(UsuarioTipoGuard)
   async remove(@Param('id') id: string, @Res() response: Response) {
     const result = await this.clientsService.remove(+id);
     return response.status(result.status).json(result)

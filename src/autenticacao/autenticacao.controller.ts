@@ -13,6 +13,10 @@ import { CreateTokenDto } from './dto/create-token.dto';
 import { AutenticacaoService } from './autenticacao.service';
 import { AutenticacaoGuard } from './autenticacao.guard';;
 
+import { UsuarioTipoGuard } from './autenticacao.RolesGuard';
+import { Role } from './enumeracoes/role.enum';
+import { Roles } from './autenticacao.decorator';
+
 @Controller('autenticacao')
 export class AutenticacaoController {
   constructor(
@@ -41,8 +45,10 @@ export class AutenticacaoController {
 
   }
 
-  /** teste */
+  /** teste apenas para clientes */
   @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Client)
+  @UseGuards(UsuarioTipoGuard)
   @Delete()
   async test() {
     throw new NotImplementedException();

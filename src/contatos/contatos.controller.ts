@@ -18,6 +18,7 @@ import { AutenticacaoGuard } from 'src/autenticacao/autenticacao.guard';
 //autorização
 import { Role } from 'src/autenticacao/enumeracoes/role.enum';
 import { Roles } from 'src/autenticacao/autenticacao.decorator';
+import { UsuarioTipoGuard } from 'src/autenticacao/autenticacao.RolesGuard';
 
 @Controller('contatos')
 export class ContatosController {
@@ -29,6 +30,7 @@ export class ContatosController {
   @Post()
   @UseGuards(AutenticacaoGuard)
   @Roles(Role.Petshop)
+  @UseGuards(UsuarioTipoGuard)
   async criarContato(
     @Body(new ValidationPipe()) createContatoDto: CreateContatoDto
   ): Promise<any> {
@@ -38,6 +40,7 @@ export class ContatosController {
   @Put(':id')
   @UseGuards(AutenticacaoGuard)
   @Roles(Role.Petshop)
+  @UseGuards(UsuarioTipoGuard)
   async editarContato(
     @Body(new ValidationPipe()) editarContatoDto: EditarContatoDto,
     @Param('id') id: number
@@ -48,6 +51,7 @@ export class ContatosController {
   @Get(':nome')
   @UseGuards(AutenticacaoGuard)
   @Roles(Role.Petshop)
+  @UseGuards(UsuarioTipoGuard)
   async lerContatos(
     @Param('nome') nome: string
   ): Promise<any> {
@@ -57,6 +61,7 @@ export class ContatosController {
   @Delete(':id')
   @UseGuards(AutenticacaoGuard)
   @Roles(Role.Petshop)
+  @UseGuards(UsuarioTipoGuard)
   async deletarContato(
     @Param('id') id: number
   ): Promise<any> {

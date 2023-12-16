@@ -1,7 +1,28 @@
-import { AutenticacaoGuard } from './autenticacao.guard';
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 
-describe('AutenticacaoGuard', () => {
-  it('should be defined', () => {
-    expect(new AutenticacaoGuard()).toBeDefined();
-  });
-});
+import { Role } from './enumeracoes/role.enum';
+import { ROLES_KEY } from './autenticacao.decorator';
+
+@Injectable()
+export class RolesGuard implements CanActivate {
+
+  constructor(private reflector: Reflector) {}
+
+  canActivate(context: ExecutionContext): boolean {
+
+    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(
+      ROLES_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+    if (!requiredRoles) {
+      return true;
+    }
+
+    const { user } = context.switchToHttp().getRequest();
+    return requiredRoles.some((role) => user.roles?.includes(role));
+  }
+
+}
