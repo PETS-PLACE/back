@@ -6,6 +6,9 @@ import { PetshopModule } from './petshop/petshop.module';
 import { Petshop } from './petshop/entities/petshop.entity';
 import { Contatos } from './contatos/entities/contatos.entity';
 import { ContatosModule } from './contatos/contatos.module';
+import { ServicesModule } from './services/services.module';
+import { Service } from './services/entities/service.entity';
+import { join } from 'path';
 require('dotenv').config();
 
 @Module({
@@ -17,16 +20,20 @@ require('dotenv').config();
       username: process.env.MYSQL_DB_USER,
       password: process.env.MYSQL_DB_PASSWORD,
       database: process.env.MYSQL_DB_NAME,
+      //synchronize: true,
       entities: [
         Client,
         Petshop,
-        Contatos
+        Contatos,
+        Service
       ],
-      synchronize: true,
+      migrationsRun: true,
+      migrations: [join(__dirname, 'migrations', '*')],
     }),
     ClientsModule,
     PetshopModule,
-    ContatosModule
+    ContatosModule,
+    ServicesModule
   ],
   controllers: [],
   providers: [],
