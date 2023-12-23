@@ -3,9 +3,12 @@ import {
   CreateDateColumn, UpdateDateColumn,
   PrimaryGeneratedColumn,
   Unique,
-  OneToMany
+  OneToMany,
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 import { Contatos } from "src/contatos/entities/contatos.entity";;
+import { Service } from "src/services/entities/service.entity";
 
 @Entity()
 @Unique(['cnpj'])
@@ -49,5 +52,9 @@ export class Petshop {
 
     @UpdateDateColumn({name: 'updated_at'})
     updatedAt:string;
+
+    @ManyToMany(() => Service, service => service.petShops)
+    @JoinTable()
+    services: Service[]
 };
 
