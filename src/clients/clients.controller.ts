@@ -5,6 +5,15 @@ import { UpdateClientDto } from './dto/update-client.dto';
 import { Response } from 'express';
 import { CheckIsRegistrationPipe } from './pipes/check-is-registration.pipe';
 
+//autenticação
+import { UseGuards } from '@nestjs/common';
+import { AutenticacaoGuard } from 'src/autenticacao/autenticacao.guard';
+
+//autorização
+import { Role } from 'src/autenticacao/enumeracoes/role.enum';
+import { Roles } from 'src/autenticacao/autenticacao.decorator';
+import { UsuarioTipoGuard } from 'src/autenticacao/autenticacao.RolesGuard';
+
 /** Controlador clients.
  *  @constructor
  *  @param {ClientsService} clientsService - serviço do cliente
@@ -38,6 +47,9 @@ export class ClientsController {
   /** Retorna todos os registros de cliente.
   * */
   @Get()
+  @Roles(Role.Client)
+  @UseGuards(AutenticacaoGuard)
+  @UseGuards(UsuarioTipoGuard)
   async findAll(@Res() response: Response) {
     const result = await this.clientsService.findAll();
     return response.status(result.status).json(result)
@@ -48,6 +60,9 @@ export class ClientsController {
    *  @param {string} id - id absoluto do banco de dados.
   * */
   @Get(':id')
+  @Roles(Role.Client)
+  @UseGuards(AutenticacaoGuard)
+  @UseGuards(UsuarioTipoGuard)
   async findOne(@Res() response:Response, @Param('id') id: string) {
     
     const result = await this.clientsService.findOne(+id);
@@ -59,6 +74,9 @@ export class ClientsController {
    *  @param {string} id - id absoluto do banco de dados.
   * */
   @Patch(':id')
+  @Roles(Role.Client)
+  @UseGuards(AutenticacaoGuard)
+  @UseGuards(UsuarioTipoGuard)
   async update(@Param('id') id: string, @Body() updateClientDto: UpdateClientDto, @Res() response: Response) {
     const result = await this.clientsService.update(+id, updateClientDto);
     return response.status(result.status).json(result)
@@ -69,6 +87,9 @@ export class ClientsController {
   * */
   //@HttpCode(204) //NoContent
   @Delete(':id')
+  @Roles(Role.Client)
+  @UseGuards(AutenticacaoGuard)
+  @UseGuards(UsuarioTipoGuard)
   async remove(@Param('id') id: string, @Res() response: Response) {
     const result = await this.clientsService.remove(+id);
     return response.status(result.status).json(result)

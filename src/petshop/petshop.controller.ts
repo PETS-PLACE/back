@@ -8,6 +8,15 @@ import { PetshopService } from './petshop.service';
 import { ChecarPetshopsPipe } from './pipes/checar-petshops.pipe';
 import { UpdatePetshopDto } from './dto/update-petshop.dto';
 
+//autenticação
+import { UseGuards } from '@nestjs/common';
+import { AutenticacaoGuard } from 'src/autenticacao/autenticacao.guard';
+
+//autorização
+import { Role } from 'src/autenticacao/enumeracoes/role.enum';
+import { Roles } from 'src/autenticacao/autenticacao.decorator';
+import { UsuarioTipoGuard } from 'src/autenticacao/autenticacao.RolesGuard'; 
+
 @Controller('petshop')
 export class PetshopController {
 
@@ -35,24 +44,36 @@ export class PetshopController {
   }
 
   @Get()
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
+  @UseGuards(UsuarioTipoGuard)
   async findAll(@Res() response: Response){
     const result = await this.petshopService.findAll()
     return response.status(result.status).json(result)
   }
 
   @Get(':id')
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
+  @UseGuards(UsuarioTipoGuard)
   async findOne(@Res() response:Response, @Param('id') id: string){
     const result = await this.petshopService.findOne(+id)
     return response.status(result.status).json(result)
   }
 
   @Patch(":id")
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
+  @UseGuards(UsuarioTipoGuard)
   async update(@Res() response:Response, @Param('id') id: string, @Body() updatePetshopDto: UpdatePetshopDto){
     const result = await this.petshopService.update(+id, updatePetshopDto)
     return response.status(result.status).json(result)
   }
 
   @Delete(":id")
+  @UseGuards(AutenticacaoGuard)
+  @Roles(Role.Petshop)
+  @UseGuards(UsuarioTipoGuard)
   async remove(@Res() response:Response, @Param('id') id: string){
     const result = await this.petshopService.remove(+id)
     return response.status(result.status).json(result)

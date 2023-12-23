@@ -6,6 +6,7 @@ import { PetshopModule } from './petshop/petshop.module';
 import { Petshop } from './petshop/entities/petshop.entity';
 import { Contatos } from './contatos/entities/contatos.entity';
 import { ContatosModule } from './contatos/contatos.module';
+import { AutenticacaoModule } from './autenticacao/autenticacao.module';
 import { ServicesModule } from './services/services.module';
 import { Service } from './services/entities/service.entity';
 import { join } from 'path';
@@ -33,6 +34,7 @@ require('dotenv').config();
     ClientsModule,
     PetshopModule,
     ContatosModule,
+    AutenticacaoModule,
     ServicesModule
   ],
   controllers: [],
