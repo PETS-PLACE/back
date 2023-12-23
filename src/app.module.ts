@@ -10,6 +10,7 @@ import { AutenticacaoModule } from './autenticacao/autenticacao.module';
 import { ServicesModule } from './services/services.module';
 import { Service } from './services/entities/service.entity';
 import { join } from 'path';
+import { AnimaisModule } from './animais/animais.module';
 require('dotenv').config();
 
 @Module({
@@ -35,7 +36,8 @@ require('dotenv').config();
     PetshopModule,
     ContatosModule,
     AutenticacaoModule,
-    ServicesModule
+    ServicesModule,
+    AnimaisModule
   ],
   controllers: [],
   providers: [],
