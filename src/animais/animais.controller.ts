@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { Get, Post, Patch, Delete} from '@nestjs/common';
-import { Res, Body, Param } from '@nestjs/common';
+import { Body, Param } from '@nestjs/common';
+import { NotImplementedException } from '@nestjs/common';
 import { ValidationPipe } from '@nestjs/common';
 
 import { UseGuards } from '@nestjs/common';
@@ -27,7 +28,7 @@ export class AnimaisController {
   @UseGuards(AutenticacaoGuard)
   @Roles(Role.Client)
   @UseGuards(UsuarioTipoGuard)
-  async registrarPetshop(
+  async registrarAnimal(
     @Body(new ValidationPipe()) createAnimalDto: CreateAnimalDto,
   ) {
     return await this.animaisService.novoRegistroAnimal( createAnimalDto );
@@ -48,7 +49,10 @@ export class AnimaisController {
   @Roles(Role.Client)
   @UseGuards(UsuarioTipoGuard)
   async findOne( @Param('id') id: string ) {
-    return ;
+    throw new NotImplementedException({
+      status: 501,
+      message: 'não implementado'
+    });
   }
 
   @Patch(":id")

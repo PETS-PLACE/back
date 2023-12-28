@@ -32,7 +32,7 @@ export class Client {
     @Column("varchar", {length: 255})
     email: string
 
-    @OneToMany( () => Animais, (Animais) => Animais.clientes )
+    @OneToMany( () => Animais, (Animais) => Animais.cliente )
     animais: Animais[];
 
     @Column()

@@ -13,25 +13,25 @@ export class Animais {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar',{length: 255})
+  @Column('varchar',{length: 255, nullable: false})
   nome: string;
 
-  @Column('string',{length: 32})
+  @Column('varchar',{length: 32, nullable: false})
   especie: string;
 
-  @Column('number')
+  @Column({nullable: false})
   idade: number;
 
-  @Column('number')
+  @Column('decimal',{nullable: false})
   peso: number;
 
-  @ManyToOne( () => Client, (Client) => Client.animais )
-  clientes: Client;
+  @ManyToOne( () => Client, (Client) => Client.animais,{nullable: false} )
+  cliente: Client;
 
-  @CreateDateColumn({name: 'created_at'})
+  @CreateDateColumn({name: 'created_at',nullable: false})
   createAt: string;
 
-  @UpdateDateColumn({name: 'updated_at'})
+  @UpdateDateColumn({name: 'updated_at',nullable: false})
   updatedAt:string;
 
 };

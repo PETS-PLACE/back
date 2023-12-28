@@ -25,7 +25,7 @@ export class AnimaisService {
       animal.especie =  createAnimalDto.especie;
       animal.idade =  createAnimalDto.idade;
       animal.peso =  createAnimalDto.peso;
-      animal.clientes = cliente;
+      animal.cliente = cliente;
 
       return this.animaisRepo.save( animal );
     }
@@ -45,7 +45,7 @@ export class AnimaisService {
 
       return await this.animaisRepo.createQueryBuilder('animais')
         .leftJoinAndSelect('client.animais', 'animais')
-        .where('animais.clientes = :idClient', {idClient: client.id})
+        .where('animais.cliente = :idClient', {idClient: client.id})
         .getMany();
     }
     catch(err) {

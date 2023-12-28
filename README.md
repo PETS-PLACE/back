@@ -75,13 +75,12 @@ $ docker compose --help
 
 ```
 
-## ROTAS
-Última atualização: 14/12/2023
+## DOCUMENTAÇÃO DOS END-POINTS
+Última atualização: 27/12/2023
 
 ``` Informações únicas para cada usuário: nome, cpf, email
     (!) alertas de segurança ou desempenho.
     (A) autenticação necessária.
-
 
 /clients
     /clients, POST {nome,cpf,rua,numero,bairro,cidade,estado,email,password}
@@ -89,6 +88,13 @@ $ docker compose --help
     /clients/:id, GET - retona cliente pelo seu id (A)
     /clients/:id, PATCH - PartialType de POST (A)
     /clients/:id, DELETE - deleta cliente pelo seu id (A)
+
+/animais
+    /animais, POST {cliente.nome,nome,especie,idade,peso}(A)
+    /animais, GET - retorna todos os animais de tal cliente {cliente.nome}(A)
+    /animais/:id, GET - Não implementado (A)
+    /animais/:id, PATCH - PartialType de POST (A)
+    /animais/:id, DELETE - deleta animal pelo id (A)
 
 /petshop
     /petshop, POST {nome,cnpj,rua,numero,bairro,cidade,estado,email,password}
@@ -104,7 +110,7 @@ $ docker compose --help
     /contatos/:id, DELETE - deleta contato pelo id (A)
 
 /autenticacao
-    POST {USUARIO.nome, USUARIO.senha, tipo} - obter autorização para acesso à rotas (!)
+    POST {USUARIO.nome, USUARIO.senha, tipo} - obter autorização para acesso à rotas
         Authorization: bearer <base64_do_token>
 
 ```
