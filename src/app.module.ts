@@ -10,6 +10,8 @@ import { AutenticacaoModule } from './autenticacao/autenticacao.module';
 import { ServicesModule } from './services/services.module';
 import { Service } from './services/entities/service.entity';
 import { join } from 'path';
+import { AnimaisModule } from './animais/animais.module';
+import { Animais } from './animais/entity/animais.entity';
 require('dotenv').config();
 
 @Module({
@@ -26,7 +28,8 @@ require('dotenv').config();
         Client,
         Petshop,
         Contatos,
-        Service
+        Service,
+        Animais
       ],
       migrationsRun: true,
       migrations: [join(__dirname, 'migrations', '*')],
@@ -35,7 +38,8 @@ require('dotenv').config();
     PetshopModule,
     ContatosModule,
     AutenticacaoModule,
-    ServicesModule
+    ServicesModule,
+    AnimaisModule
   ],
   controllers: [],
   providers: [],
