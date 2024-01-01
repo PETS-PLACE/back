@@ -1,19 +1,20 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString, IsEmail } from "class-validator";
 
 /** Requer campos "nome" e "password" de
 *   ambos os usuarios.*/
 export class CreateTokenDto {
 
-  @IsString({message:'campo nome nao string'})
-  @IsNotEmpty({message:'campo nome vazio'})
-  nome: string;
+  @IsNotEmpty({message:'campo email vazio'})
+  @IsString({message:'campo email não string'})
+  @IsEmail()
+  email: string;
 
-  @IsString({message:'campo senha nao string'})
   @IsNotEmpty({message:'campo senha vazio'})
+  @IsString({message:'campo senha nao string'})
   senha: string;
 
-  @IsString({message:'campo tipo de conta nao string'})
   @IsNotEmpty({message:'campo tipo de conta vazio'})
+  @IsString({message:'campo tipo de conta nao string'})
   tipo: 'client'|'petshop';
 }
 

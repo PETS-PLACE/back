@@ -43,7 +43,7 @@ export class AutenticacaoService {
       if ( createTokenDto.tipo == 'client' ) {
         usuario = await this.clientRepository.findOne({
             where: {
-              nome: createTokenDto.nome
+              email: createTokenDto.email
             }
           });
         tipo = 'client';
@@ -51,7 +51,7 @@ export class AutenticacaoService {
       else if ( createTokenDto.tipo == 'petshop' ) {
         usuario = await this.petshopRepository.findOne({
             where: {
-              nome: createTokenDto.nome
+              email: createTokenDto.email
             }
           });
         tipo = 'petshop';
@@ -69,7 +69,7 @@ export class AutenticacaoService {
         tipo: tipo          //utilizado para ROLE BASED ACCESS CONTROL
       };
       
-      if ( usuario.nome == createTokenDto.nome && usuario.password == createTokenDto.senha ) {
+      if ( usuario.email == createTokenDto.email && usuario.password == createTokenDto.senha ) {
         return {
           status: 200,
           result: {
