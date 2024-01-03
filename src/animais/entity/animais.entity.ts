@@ -2,9 +2,10 @@ import {
   Entity, Column,
   CreateDateColumn, UpdateDateColumn,
   PrimaryGeneratedColumn,
-  ManyToOne
+  ManyToOne, OneToMany
 } from "typeorm";
 import { Client } from "src/clients/entities/client.entity";
+import { Agendamentos } from "src/agendamentos/entity/agendamentos.entity";
 
 
 @Entity()
@@ -27,6 +28,9 @@ export class Animais {
 
   @ManyToOne( () => Client, (Client) => Client.animais,{nullable: false} )
   cliente: Client;
+
+  @OneToMany( () => Agendamentos, (agendamentos) => agendamentos.animal )
+  agendamentos: Agendamentos[];
 
   @CreateDateColumn({name: 'created_at',nullable: false})
   createAt: string;
