@@ -6,17 +6,17 @@ export class Agendamentos1704244600474 implements MigrationInterface {
       await queryRunner.query(
         `
           CREATE TABLE agendamento (
-            id INTEGER AUTO_INCREMENT,
+            id INTEGER AUTO_INCREMENT PRIMARY KEY,
             cpf VARCHAR(11) NOT NULL,
             observacoes TEXT,
-            cliente INT NOT NULL,
-            petshop INT NOT NULL,
-            servico INT NOT NULL,
-            animal  INT NOT NULL,
-            FOREIGN KEY ( cliente ) REFERENCES client(),
-            FOREIGN KEY ( petshop ) REFERENCES animais(),
-            FOREIGN KEY ( servico ) REFERENCES petshop(),
-            FOREIGN KEY ( animal  ) REFERENCES service()
+            clienteId INT NOT NULL,
+            petshopId INT NOT NULL,
+            servicoId INT NOT NULL,
+            animalId  INT NOT NULL,
+            FOREIGN KEY ( clienteId ) REFERENCES client( id ),
+            FOREIGN KEY ( petshopId ) REFERENCES animais( id ),
+            FOREIGN KEY ( servicoId ) REFERENCES petshop( id ),
+            FOREIGN KEY ( animalId  ) REFERENCES service( id )
           );
         `);
     }
