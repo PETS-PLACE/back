@@ -76,7 +76,7 @@ $ docker compose --help
 ```
 
 ## DOCUMENTAÇÃO DOS END-POINTS
-Última atualização: 27/12/2023
+Última atualização: 03/01/2023
 
 ``` Informações únicas para cada usuário: nome, cpf, email
     (!) alertas de segurança ou desempenho.
@@ -96,12 +96,23 @@ $ docker compose --help
     /animais/:id, PATCH - PartialType de POST (A)
     /animais/:id, DELETE - deleta animal pelo id (A)
 
+/agendamentos
+    /agendamentos, POST {cpf,observacoes?,animalId,petShopId,servicoId}
+    /agendamentos, GET - retorna todos os agendamentos do cliente por token.
+
 /petshop
     /petshop, POST {nome,cnpj,rua,numero,bairro,cidade,estado,email,password}
     /petshop, GET - retorna todos os petshops do sistema (!)(A)
     /petshop/:id, GET - retorna petshop pelo seu id (A)
     /petshop/:id, PATCH - partialType de POST (A)
     /petshop/:id, DELETE - deleta petshop pelo id (A)
+
+/services
+    /services, POST {name,description?,cost?,petShopId}
+    /services, GET - tudo
+    /services/:id, GET - especifica pelo id.
+    /services/:id, PATCH - edita pelo id {POST dto}
+    /services, DELETE - delete não especificado.
 
 /contatos
     /contatos/:nome, GET - lista de contatos do petshop com nome (!)(A)

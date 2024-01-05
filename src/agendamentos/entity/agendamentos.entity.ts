@@ -15,6 +15,12 @@ export class Agendamentos {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({length: 11})
+  cpf: string;
+
+  @Column()
+  observacoes: string;
+
   //executor da ação
   @ManyToOne( () => Petshop, (petshop) => petshop.agendamentos )
   petshop: Petshop;
