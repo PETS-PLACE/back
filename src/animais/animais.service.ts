@@ -38,15 +38,10 @@ export class AnimaisService {
     }
   }
 
-  async todosRegistros( updateAnimalDto: UpdateAnimalDto )
+  async todosRegistros()
   {
     try{
-      const client = await this.clientsRepo.findOne({where:{nome:updateAnimalDto.cliente}});
-
-      return await this.animaisRepo.createQueryBuilder('animais')
-        .leftJoinAndSelect('client.animais', 'animais')
-        .where('animais.cliente = :idClient', {idClient: client.id})
-        .getMany();
+      return await this.animaisRepo.find();
     }
     catch(err) {
       throw new InternalServerErrorException({

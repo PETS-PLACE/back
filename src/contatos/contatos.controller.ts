@@ -48,14 +48,12 @@ export class ContatosController {
     return await this.contatosService.editarContato( editarContatoDto, id );
   }
 
-  @Get(':nome')
+  @Get('')
   @UseGuards(AutenticacaoGuard)
   @Roles(Role.Petshop)
   @UseGuards(UsuarioTipoGuard)
-  async lerContatos(
-    @Param('nome') nome: string
-  ): Promise<any> {
-    return await this.contatosService.lerContatos( nome );
+  async lerContatos(): Promise<any> {
+    return await this.contatosService.lerTodosContatos();
   }
 
   @Delete(':id')
