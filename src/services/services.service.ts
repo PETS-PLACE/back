@@ -71,10 +71,11 @@ export class ServicesService {
       //Associa um serviço padrão ao petshop indicado
       else{
         //Verifica se o serviço indicado existe
-        const findService = await this.servicesRepositorio.find({
+        const findService: Service[] = await this.servicesRepositorio.find({
           where:{
             name: createServiceDto.name
-          }
+          },
+          relations: { petShops: true}
         })
 
         if(findService.length == 0){
@@ -84,7 +85,7 @@ export class ServicesService {
           }
         }
       
-        findService[0].petShops = findPetShop
+        findService[0].petShops.push(...findService[0].petShops, findPetShop[0])
 
         const result = await this.servicesRepositorio.save(findService)
         return{
@@ -105,27 +106,51 @@ export class ServicesService {
   async findAll(request: Request) {
     try {
       const petShopId = Number(request.query.petShopId)
-      
-      const result = await this.petshopsRepositorio.find({
-        where: {
-          id: petShopId
-        },
-        relations:{
-          services: true
-        }
-      })
 
-      if(result.length == 0){
+      if(petShopId){
+        
+        const result = await this.petshopsRepositorio.find({
+          where: {
+            id: petShopId
+          },
+          relations:{
+            services: true
+          }
+        })
+  
+        if(result.length == 0){
+          return{
+            status: 400,
+            message: 'Nenhum serviço encontrado.'
+          }
+        }
+  
         return{
-          status: 400,
-          message: 'Nenhum serviço encontrado.'
+          status: 200,
+          result
         }
       }
 
-      return{
-        status: 200,
-        result
+      else{
+        const result = await this.servicesRepositorio.find({
+          relations:{
+            petShops: true
+          }
+        })
+  
+        if(result.length == 0){
+          return{
+            status: 400,
+            message: 'Nenhum serviço encontrado.'
+          }
+        }
+  
+        return{
+          status: 200,
+          result
+        }
       }
+      
 
     } catch (error) {
       console.error(error);

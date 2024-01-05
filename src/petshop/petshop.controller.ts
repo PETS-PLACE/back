@@ -1,4 +1,4 @@
-import { Controller, Res, Param, Patch, Delete } from '@nestjs/common';
+import { Controller, Res, Req, Param, Patch, Delete } from '@nestjs/common';
 import { Get, Post } from '@nestjs/common';
 import { Body } from '@nestjs/common';
 import { Request, Response } from 'express';
@@ -47,8 +47,8 @@ export class PetshopController {
   @UseGuards(AutenticacaoGuard)
   @Roles(Role.Petshop)
   @UseGuards(UsuarioTipoGuard)
-  async findAll(@Res() response: Response){
-    const result = await this.petshopService.findAll()
+  async findAll(@Res() response: Response, @Req() request: Request){
+    const result = await this.petshopService.findAll(request)
     return response.status(result.status).json(result)
   }
 
