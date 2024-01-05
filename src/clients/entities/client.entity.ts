@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn, OneToMany } from "typeorm";
+import { Animais } from "src/animais/entity/animais.entity";
 
 @Entity()
 //O campo cpf deve ser unico
@@ -30,6 +31,9 @@ export class Client {
 
     @Column("varchar", {length: 255})
     email: string
+
+    @OneToMany( () => Animais, (Animais) => Animais.cliente )
+    animais: Animais[];
 
     @Column()
     password: string

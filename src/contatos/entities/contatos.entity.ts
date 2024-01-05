@@ -15,7 +15,7 @@ export class Contatos {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar',{length: 255})
+  @Column('varchar',{length: 255, nullable: false})
   info: string;
 
   @ManyToOne( () => Petshop, (petshop) => petshop.contatos )

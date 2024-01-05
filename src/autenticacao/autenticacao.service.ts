@@ -56,8 +56,7 @@ export class AutenticacaoService {
           });
         tipo = 'petshop';
       }
-
-      if ( typeof tipo == undefined ) {
+      else {
         return {
           status: 500,
           message: 'O método responsavel criar o token não conseguiu determinar o tipo da conta'
@@ -87,7 +86,7 @@ export class AutenticacaoService {
     catch( err ) {
       return {
         status: 500,
-        message: 'consulta à conta do cliente ou petshop falhou' + err
+        message: 'consulta à conta do cliente ou petshop falhou. ' + err
       }
     }
   }
