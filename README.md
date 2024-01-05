@@ -84,45 +84,45 @@ $ docker compose --help
 
 /clients
     /clients, POST {nome,cpf,rua,numero,bairro,cidade,estado,email,password}
-    /clients, GET - retorna todos os clientes do sistema (!)(A)
+    /clients, GET - retorna todos os clientes registrados (!)(A)
     /clients/:id, GET - retona cliente pelo seu id (A)
     /clients/:id, PATCH - PartialType de POST (A)
     /clients/:id, DELETE - deleta cliente pelo seu id (A)
 
 /animais
     /animais, POST {cliente.nome,nome,especie,idade,peso}(A)
-    /animais, GET - retorna todos os animais de tal cliente {cliente.nome}(A)
+    /animais, GET - retorna todos os animais registrados (A)
     /animais/:id, GET - Não implementado (A)
     /animais/:id, PATCH - PartialType de POST (A)
     /animais/:id, DELETE - deleta animal pelo id (A)
 
 /agendamentos
     /agendamentos, POST {cpf,observacoes?,animalId,petShopId,servicoId}
-    /agendamentos, GET - retorna todos os agendamentos do cliente por token.
+    /agendamentos, GET - retorna todos os agendamentos do cliente logado por token.
 
 /petshop
     /petshop, POST {nome,cnpj,rua,numero,bairro,cidade,estado,email,password}
-    /petshop, GET - retorna todos os petshops do sistema (!)(A)
+    /petshop, GET - retorna todos os petshops registrados (!)(A)
     /petshop/:id, GET - retorna petshop pelo seu id (A)
     /petshop/:id, PATCH - partialType de POST (A)
     /petshop/:id, DELETE - deleta petshop pelo id (A)
 
 /services
     /services, POST {name,description?,cost?,petShopId}
-    /services, GET - tudo
+    /services, GET - retorna todos os serviços registrados.
     /services/:id, GET - especifica pelo id.
     /services/:id, PATCH - edita pelo id {POST dto}
     /services, DELETE - delete não especificado.
 
 /contatos
-    /contatos/:nome, GET - lista de contatos do petshop com nome (!)(A)
+    /contatos, GET - retorna todos os contatos registrados no sistema (!)(A)
     /contatos, POST {contato.info, petshop.nome} - novo contato (A)
     /contatos/:id, PUT {contato.info} - alterar contato (A)
     /contatos/:id, DELETE - deleta contato pelo id (A)
 
 /autenticacao
-    POST {USUARIO.nome, USUARIO.senha, tipo} - obter autorização para acesso à rotas
-        Authorization: bearer <base64_do_token>
+    POST {USUARIO.email, USUARIO.senha, USUARIO.tipo} - obter autorização para acesso à rotas
+        Authorization: bearer af8424bb...
 
 ```
 
