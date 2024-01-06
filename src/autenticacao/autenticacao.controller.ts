@@ -34,8 +34,8 @@ export class AutenticacaoController {
     {
       response
         .status(200)
-        .set('Authorization', retorno.result.access_token )
-        .send( { status:retorno.status } );
+        .set('Authorization', retorno.token )
+        .send( {status:retorno.status, result:retorno.result} );
     }
     else {
     response

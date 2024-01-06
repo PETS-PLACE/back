@@ -10,8 +10,9 @@ import { CreateTokenDto } from './dto/create-token.dto';
 
 type Retorno = {
   status:number;
-  result?:{access_token:string};
-  message?:string
+  token?:string;
+  result?:object;
+  message?:any
 };
 
 type Token =
@@ -72,10 +73,13 @@ export class AutenticacaoService {
       if ( usuario.email == createTokenDto.email && usuario.password == createTokenDto.senha ) {
         return {
           status: 200,
-          result: {
-            access_token:
-              await this.jwtService.signAsync(carga)
-          }
+          result:{
+            tipo: tipo,
+            nome: usuario.nome,
+            email: usuario.email,
+            id: usuario.id
+          },
+          token: await this.jwtService.signAsync(carga)
         }
       }
       return {
