@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { Contatos } from "src/contatos/entities/contatos.entity";;
 import { Service } from "src/services/entities/service.entity";
+import { Agendamentos } from "src/agendamentos/entity/agendamentos.entity";
 
 @Entity()
 @Unique(['cnpj'])
@@ -55,6 +56,9 @@ export class Petshop {
 
     @ManyToMany(() => Service, service => service.petShops)
     @JoinTable()
-    services: Service[]
+    services: Service[];
+
+    @OneToMany( () => Agendamentos, (agendamentos) => agendamentos.servico )
+    agendamentos: Agendamentos[];
 };
 

@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn, OneToMany } from "typeorm";
 import { Petshop } from "src/petshop/entities/petshop.entity";
+import { Agendamentos } from "src/agendamentos/entity/agendamentos.entity";
 
 @Entity()
 export class Service {
@@ -26,4 +27,7 @@ export class Service {
 
     @ManyToMany(() => Petshop, petShop => petShop.services)
     petShops: Petshop[];
+
+    @OneToMany( () => Agendamentos, (agendamentos) => agendamentos.servico )
+    agendamentos: Agendamentos[];
 }
