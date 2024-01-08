@@ -73,14 +73,9 @@ export class ContatosService {
     }
   }
 
-  async lerContatos( nome: string ) {
+  async lerTodosContatos() {
     try {
-      const petshop = await this.petshopExiste( nome );
-
-      return await this.petshopRepo.createQueryBuilder('petshop')
-        .leftJoinAndSelect('petshop.contatos', 'contatos')
-        .where('contatos.petshop = :idPetshop', {idPetshop:petshop.id})
-        .getMany();
+      return await this.contatosRepo.find();
     }
     catch( err ) {
       throw new InternalServerErrorException({

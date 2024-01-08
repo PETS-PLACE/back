@@ -38,10 +38,8 @@ export class AnimaisController {
   @UseGuards(AutenticacaoGuard)
   @Roles(Role.Client)
   @UseGuards(UsuarioTipoGuard)
-  async findAll(
-    @Body() updateAnimalDto: UpdateAnimalDto
-  ){
-    return await this.animaisService.todosRegistros( updateAnimalDto );
+  async findAll(){
+    return await this.animaisService.todosRegistros();
   }
 
   @Get(':id')

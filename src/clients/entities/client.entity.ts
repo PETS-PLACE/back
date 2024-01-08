@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn, OneToMany } from "typeorm";
 import { Animais } from "src/animais/entity/animais.entity";
+import { Agendamentos } from "src/agendamentos/entity/agendamentos.entity";
 
 @Entity()
 //O campo cpf deve ser unico
@@ -34,6 +35,9 @@ export class Client {
 
     @OneToMany( () => Animais, (Animais) => Animais.cliente )
     animais: Animais[];
+
+    @OneToMany( () => Agendamentos, (agendamentos) => agendamentos.servico )
+    agendamentos: Agendamentos[];
 
     @Column()
     password: string
