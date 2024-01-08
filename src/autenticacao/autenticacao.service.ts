@@ -77,9 +77,9 @@ export class AutenticacaoService {
             tipo: tipo,
             nome: usuario.nome,
             email: usuario.email,
-            id: usuario.id
+            id: usuario.id,
+            token: await this.jwtService.signAsync(carga)
           },
-          token: await this.jwtService.signAsync(carga)
         }
       }
       return {

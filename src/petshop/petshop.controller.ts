@@ -44,18 +44,12 @@ export class PetshopController {
   }
 
   @Get()
-  @UseGuards(AutenticacaoGuard)
-  @Roles(Role.Petshop)
-  @UseGuards(UsuarioTipoGuard)
   async findAll(@Res() response: Response, @Req() request: Request){
     const result = await this.petshopService.findAll(request)
     return response.status(result.status).json(result)
   }
 
   @Get(':id')
-  @UseGuards(AutenticacaoGuard)
-  @Roles(Role.Petshop)
-  @UseGuards(UsuarioTipoGuard)
   async findOne(@Res() response:Response, @Param('id') id: string){
     const result = await this.petshopService.findOne(+id)
     return response.status(result.status).json(result)
